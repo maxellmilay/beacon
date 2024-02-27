@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 body {
-  color: black;
-  background: white;
+  color: #0c1323;
+  background: #0c1323;
+}
+
+/* Add this CSS to your stylesheet */
+.popup {
+  position: absolute;
+  top: 20px;
+  right: -100%; /* Initially off-screen */
+  transition: right 0.3s ease-in-out; /* Transition for sliding effect */
+  background-color: #ff4444; /* Adjust as needed */
+  color: white; /* Adjust as needed */
+  padding: 10px; /* Adjust as needed */
+}
+
+.popup.active {
+  right: 50%; /* Slide in to the center */
+}
+
+.inputs > div {
+  display: flex;
+  flex-direction: column;
 }
