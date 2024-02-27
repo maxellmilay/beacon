@@ -2,22 +2,25 @@ import app from '@/db/firebase';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { UserInterface } from '@/interface/authInterface';
 import { Dispatch, SetStateAction } from 'react';
+import { postInitialUserData } from './store';
 
 const provider = new GoogleAuthProvider();
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export const handleSignIn = (setUser: Dispatch<SetStateAction<UserInterface>>) => {
+export const handleSignIn = async(setUser: Dispatch<SetStateAction<UserInterface>>) => {
 
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        
+
         if(user.displayName && user.email) {
-            setUser({
-                name: user.displayName,
-                email: user.email
-            })
+          let userData = {
+            name: user.displayName,
+            email: user.email
+          }
+          postInitialUserData(userData);
+          setUser(userData)
         }
 
         // IdP data available using getAdditionalUserInfo(result)
